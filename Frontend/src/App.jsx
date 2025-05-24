@@ -7,10 +7,16 @@ function App() {
 
   return (
     <>
-<div className='text-2xl'>
-  amit
+  <div class="w-screen h-screen p-6 bg-gray-500">
+ 
+  <div class=" w-full h-full bg-white shadow-sm rounded-4xl p-4">
+   
+  </div>
+
 </div>
-    </>
+
+</>
+
   )
 }
 
