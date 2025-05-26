@@ -2,7 +2,8 @@ import { useState } from 'react'
 import './App.css'
 import Sidebar from './Components/Sidebar'
 import { Search } from 'lucide-react'
-import Dropdown from './Components/Dropdown'
+// import Dropdown from './Components/Dropdown'
+import DashboardMainContent from './Components/DashboardMainContent'
 
 
 
@@ -31,14 +32,9 @@ function App() {
                 className="pl-10 pr-4 py-2 w-full text-black border-2 border-amber-950 rounded focus:outline-none"
               />
             </div>
-            <div className=' flex m-4 text-3xl relative justify-between'>
-              <div className='text-blue-800'>Dashboard</div>
-              <div>
-                <Dropdown />
-              </div>
 
-
-            </div>
+              <DashboardMainContent />
+            
           </div>
 
 
