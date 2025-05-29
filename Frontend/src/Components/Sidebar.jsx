@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   LayoutDashboard,
   ArrowUpDown,
@@ -6,65 +7,113 @@ import {
   ChartLine,
   MessageCircleMore,
   Phone,
-  Settings
+  Settings,
+  Menu,
+  X
 } from 'lucide-react';
 
 const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const menuItems = [
+    { section: 'General', type: 'header' },
+    { icon: LayoutDashboard, label: 'Dashboard', active: true },
+    { icon: ArrowUpDown, label: 'History' },
+    { icon: CalendarDays, label: 'Calendar' },
+    { icon: Plus, label: 'Appointment' },
+    { icon: ChartLine, label: 'Statistics' },
+    { section: 'Tools', type: 'header' },
+    { icon: MessageCircleMore, label: 'Chat' },
+    { icon: Phone, label: 'Support' },
+  ];
+
   return (
-    <div className="w-64 h-full bg-blue-50 shadow-sm rounded-s-4xl p-4 flex flex-col">
-      <div className="flex items-center justify-center m-8">
-        <span className="text-sky-500 text-3xl">Health</span>
-        <span className="text-3xl text-blue-800">Care</span>
+    <>
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+      >
+        {isOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div className={`
+        fixed md:relative
+        w-64 h-full
+        bg-blue-50 shadow-sm
+        md:rounded-l-2xl
+        p-4 flex flex-col
+        transition-transform duration-300 ease-in-out
+        z-40
+        ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}>
+        {/* Logo */}
+        <div className="flex items-center justify-center mb-8 mt-4 md:mt-8">
+          <span className="text-sky-500 text-2xl sm:text-3xl font-bold">Health</span>
+          <span className="text-2xl sm:text-3xl text-blue-800 font-bold">Care</span>
+        </div>
+
+        {/* Menu Items */}
+        <nav className="flex-1 overflow-y-auto">
+          <ul className="space-y-1">
+            {menuItems.map((item, index) => (
+              item.type === 'header' ? (
+                <li key={index} className="mt-4 mb-2 px-4">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    {item.section}
+                  </span>
+                </li>
+              ) : (
+                <li key={index}>
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className={`
+                      w-full flex items-center gap-3 px-4 py-2.5 rounded-lg
+                      transition-all duration-200
+                      ${item.active 
+                        ? 'bg-white shadow-sm text-blue-800 font-medium' 
+                        : 'text-gray-700 hover:bg-white hover:shadow-sm hover:text-blue-800'
+                      }
+                    `}
+                  >
+                    <item.icon size={20} />
+                    <span className="text-sm sm:text-base">{item.label}</span>
+                  </button>
+                </li>
+              )
+            ))}
+          </ul>
+        </nav>
+
+        {/* Settings - Bottom */}
+        <div className="mt-auto pt-4 border-t border-gray-200">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-white hover:shadow-sm hover:text-blue-800 transition-all duration-200"
+          >
+            <Settings size={20} />
+            <span className="text-sm sm:text-base">Settings</span>
+          </button>
+        </div>
+
+        {/* Mobile Close Button */}
+        <button
+          onClick={() => setIsOpen(false)}
+          className="md:hidden absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          <X size={20} />
+        </button>
       </div>
-
-      <ul className="flex flex-col ml-8">
-        <li className="mb-2 text-gray-400">General</li>
-
-        <li className="flex items-center mb-2 cursor-pointer">
-          <LayoutDashboard />
-          <span className="ml-2 text-gray-700">Dashboard</span>
-        </li>
-
-        <li className="flex items-center mb-2 cursor-pointer">
-          <ArrowUpDown />
-          <span className="ml-2 text-gray-700">History</span>
-        </li>
-
-        <li className="flex items-center mb-2 cursor-pointer">
-          <CalendarDays />
-          <span className="ml-2 text-gray-700">Calendar</span>
-        </li>
-
-        <li className="flex items-center mb-2 cursor-pointer">
-          <Plus />
-          <span className="ml-2 text-gray-700">Appointment</span>
-        </li>
-
-        <li className="flex items-center mb-2 cursor-pointer">
-          <ChartLine />
-          <span className="ml-2 text-gray-700">Statistics</span>
-        </li>
-
-        <li className="mb-2 text-gray-500 mt-4">Tools</li>
-
-        <li className="flex items-center mb-2 cursor-pointer">
-          <MessageCircleMore />
-          <span className="ml-2 text-gray-700">Chat</span>
-        </li>
-
-        <li className="flex items-center mb-2 cursor-pointer">
-          <Phone />
-          <span className="ml-2 text-gray-700">Support</span>
-        </li>
-      </ul>
-
-      <div className="flex-grow"></div>
-
-      <div className="flex items-center mt-auto cursor-pointer ml-8">
-        <Settings />
-        <span className="ml-2 text-gray-700">Settings</span>
-      </div>
-    </div>
+    </>
   );
 };
 
