@@ -4,6 +4,8 @@ import Sidebar from './Components/Sidebar'
 import { Search } from 'lucide-react'
 // import Dropdown from './Components/Dropdown'
 import DashboardMainContent from './Components/DashboardMainContent'
+import Calendar from './Components/CalendarView'
+
 
 
 
@@ -38,7 +40,7 @@ function App() {
           </div>
 
 
-          <div className="w-full md:w-1/2 h-full bg-blue-50 shadow-sm  md:rounded-r-2xl p-4"></div>
+          <div className="w-full md:w-1/2 h-full bg-blue-50 shadow-sm  md:rounded-r-2xl p-4"><Calendar /></div>
         </div>
       </div>
     </div>
